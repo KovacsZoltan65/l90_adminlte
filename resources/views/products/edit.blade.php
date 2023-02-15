@@ -2,19 +2,22 @@
 
 @section('content')
 <div class="content-wrapper">
-
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Create Company</h1>
+                    <h1 class="m-0">Edit Product</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ url('companies') }}">Companies</a></li>
-                        <li class="breadcrumb-item active">Company</li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('companies') }}">Products</a>
+                        </li>
+                        <li class="breadcrumb-item active">Product</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -22,16 +25,11 @@
     </section>
     <!-- /.content-header -->
 
-    @if(session('status'))
-    <div class="alert alert-success mb-1 mt-1">
-        {{ session('status') }}
-    </div>
-    @endif
-
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="col-md-12">
+
                 <div class="card">
 
                     <div class="card-header">
@@ -39,11 +37,12 @@
                     </div>
                     <!-- /.card-header -->
 
-                    <form id="frmCompany" name="frmCompany" 
-                          action="{{ route('companies.store') }}" 
+                    <form action="{{ route('companies.update', $product->id) }}" 
                           method="POST" 
                           enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
+
                         <div class="card-body">
 
                             <div class="form-group row">
@@ -53,7 +52,7 @@
                                     <input type="text" class="form-control" 
                                            id="name" placeholder="Name" 
                                            aria-describedby="span_name"
-                                           value="">
+                                           value="{{ $product->name }}">
                                     <span id="span_name" name="span_name" 
                                           class="help-block invalid-feedback" 
                                           style="display: block;">
@@ -65,28 +64,9 @@
                         </div> <!-- /.card-body -->
 
                         <div class="card-footer">
-
-                            <!--<button type="submit" class="btn btn-info">Save</button>-->
-                            @include(
-                                'components.button', 
-                                [
-                                    'type' => 'submit',
-                                    'title' => 'Save',
-                                    'class' => 'btn btn-info'
-                                ]
-                            )
-                            <!--
+                            <button type="submit" class="btn btn-info">Save</button>
                             <a class="btn btn-default float-right" href="{{ route('companies.index') }}">Back</a>
-                            -->
-                            @include(
-                                'components.anchor',
-                                [
-                                    'class' => 'btn btn-default float-right',
-                                    'href' => route('companies.index'),
-                                    'title' => 'Back'
-                                ]
-                            )
-                        </div>
+                        </div> <!-- /.card-footer -->
 
                     </form>
                 </div>
@@ -97,29 +77,3 @@
 
 </div>
 @endsection
-
-<script>
-    $(function(){
-        $validator.setDefaults({
-            submitHandler: function(){
-                alert('Form successful submitted!');
-            }
-        });
-        $('#frmCompany').validate({
-            rules: {
-                name: {
-                    required: true
-                }
-            },
-            messages: {
-                name: {
-                    required: "A név megadása kötelező"
-                }
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element){},
-            highlight: function(element, errorClass, validClass){},
-            unhighlight: function (element, errorClass, validClass) {}
-        });
-    });
-</script>

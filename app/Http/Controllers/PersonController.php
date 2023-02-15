@@ -2,24 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PersonRequest;
 use App\Models\Person;
+use App\Repositories\PersonRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class PersonController extends Controller{
+
+    protected $repository;
+
+    function __construct(PersonRepository $repository){
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        if( $request->has('view_deleted') )
-        {
-            $persons = Person::onlyTrashed()
-                ->orderBy('id', 'desc')
-                ->paginate(config('app.paginate_number'));
+        
+        if( $request->has('view_deleted') ){
+            // Csak a törölteket
+            $persons = $this->repository
+                ->scopeQuery(function($query){
+                    return $query->onlyTrashed()
+                        ->paginate(config('app.paginate_number'));
+                })->all();
         }else{
-            $persons = Person::orderBy('id', 'desc')
-                ->paginate(config('app.paginate_number'));
+            // Csak az aktívak
+            $persons = $this->repository
+                ->scopeQuery(function($query){
+                    return $query
+                        ->paginate(config('app.paginate_number'));
+                })->all();
         }
 
         return view('persons.index', compact('persons'));
@@ -40,16 +57,30 @@ class PersonController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(PersonRequest $request){
+
+        $person = $this->repository->create($request->all());
+
+        if( empty($person) ){
+            return Redirect::to('persons')
+                ->withErrors([
+                    'error' => 'Hiba a mentés közben'
+            ]);
+        }
+
+        /*
         $request->validate([
-            'name' => 'required',
+            'name' => 'required'
         ]);
-
-        Person::create($request->post());
-
+        $this->repository
+            ->create($request->post());
+        
+        //Person::create($request->post());
+        */        
         return redirect()
             ->route('persons.index')
-            ->with('success', 'Person has been created successfullí');
+            ->with('success', 'Person has been created successfully');
+        
     }
 
     /**
@@ -69,7 +100,15 @@ class PersonController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function edit(int $id){
+        $person = $this->repository->findWithoutFail($id);
+
+        if(empty($person)){
+            return Redirect::to('persons')
+                ->withErrors(['error' => 'Nincs meg a rekord']);
+        }
+        /*
         $person = Person::find($id);
+        */
         return view('persons.edit', compact('person'));
     }
 
@@ -80,21 +119,50 @@ class PersonController extends Controller{
      * @param  Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Person $person){
-        
-        $request->validate([
-            'name' => 'required',
-        ]);
-        
-        $person->fill($request->post())->save();
+    public function update(PersonRequest $request, Person $person){
 
+        $person = $this->repository->findWithoutFail($person->id);
+
+        if( empty($person) ){
+            return Redirect::to('persons')
+                ->withErrors([
+                    'error' => 'Nincs meg a rekord'
+                ]);
+        }
+
+        $person = $this->repository
+            ->update(
+                $request->all(), 
+                $person->id
+        );
+
+        if( !$person ){
+            return Redirect::to('persons')
+                ->withErrors([
+                    'error' => 'Hiba mentés közben'
+                ]);
+        }
+
+        return Redirect::to('persons')
+            ->withErrors([
+                'success' => 'Sikeres frissítés'
+            ]);
+
+        /*
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $this->repository->update($request->post(), $person->id);
+        
         return redirect()
             ->route('persons.index')
-            ->with('succcess', 'Person has been updated successfully');
+            ->with('success', 'Person has been updated successfully');
+        */
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Távolítsa el a megadott erőforrást a tárhelyről.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -102,27 +170,36 @@ class PersonController extends Controller{
     public function destroy(Person $person){
 
         if( $person->isSoftDelete() ){
-            $person->update(['status' => 0]);
+            $this->repository->update(['status' => 0], $person->id);
         }else{
-            //
-            $person->delete();
+            $this->repository->delete($person->id);
         }
-
+        
+        // Átirányítás a "persons" oldalra üzenettel.
         return redirect()
             ->route('persons.index')
-            ->with('success', 'Person has been deleted succesfully');
-        
+            ->with('success', 'Person has been deleted successfully.');
     }
-
+    
+    /**
+     * Rekord visszaállítása
+     * 
+     * @param int $id
+     */
     public function restore(int $id){
-        Person::onlyTrashed()
+        //dd('restore');
+        $person = Person::withTrashed()
             ->find($id)
             ->update(['status' => 1]);
 
         return back();
     }
 
+    /**
+     * Összes törölt rekord visszaállítása
+     */
     public function restoreAll(){
+
         Person::onlyTrashed()
             ->update(['status' => 1]);
 

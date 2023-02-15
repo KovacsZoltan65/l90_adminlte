@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\Product;
 use App\Criteria\ProductCriteria;
+use App\Models\Person;
 
 /**
  * Interface PersonRepositoryRepository.
@@ -18,7 +18,7 @@ class PersonRepository extends BaseRepository
      * @return string
      */
     public function model(){
-        return Product::class;
+        return Person::class;
     }
 
     /**

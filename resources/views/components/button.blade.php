@@ -1,8 +1,8 @@
-<button class="{{ $class }}">
+<button type="{{$type}}" class="{{$class}}">
     @isset($icon)
-    <i class="{{ $icon }}"></i>
+    <i class="{{$icon}}"></i>
     @endisset
     @isset($title)
-    {{ $title }}
+    {{$title}}
     @endisset
 </button>

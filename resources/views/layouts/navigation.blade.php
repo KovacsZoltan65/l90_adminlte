@@ -42,12 +42,14 @@
         </li>
 
         <li class="nav-item {{ 
-            (request()->is('companies')) || 
-            (request()->is('persons')) ? 'menu-open' : '' 
+            (request()->is('companies*')) || 
+            (request()->is('persons*')) || 
+            (request()->is('products*')) ? 'menu-open' : '' 
         }}">
             <a href="#" class="nav-link {{ 
-                (request()->is('companies')) || 
-                (request()->is('persons')) ? 'active' : '' 
+                (request()->is('companies*')) || 
+                (request()->is('persons*')) || 
+                (request()->is('products*')) ? 'active' : '' 
             }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
@@ -58,7 +60,7 @@
             <ul class="nav nav-treeview">
                 <li class="nav-item">
                     <a href="{{ url('companies') }}" 
-                       class="nav-link {{ (request()->is('companies')) ? 'active' : '' }}">
+                       class="nav-link {{ (request()->is('companies*')) ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Companies</p>
                     </a>
@@ -66,20 +68,20 @@
 
                 <li class="nav-item">
                     <a href="{{ url('persons') }}" 
-                       class="nav-link {{ (request()->is('persons')) ? 'active' : '' }}">
+                       class="nav-link {{ (request()->is('persons*')) ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Persons</p>
                     </a>
                 </li>
-                <!--
+                
                 <li class="nav-item">
                     <a href="{{ url('products') }}" 
-                       class="nav-link {{ (request()->is('products')) ? 'active' : '' }}">
+                       class="nav-link {{ (request()->is('products*')) ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Products</p>
                     </a>
                 </li>
-                -->
+                
             </ul>
         </li>
 

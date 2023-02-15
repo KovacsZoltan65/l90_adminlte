@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class PersonRepository.
+ * Class Product.
  *
  * @package namespace App\Entities;
  */
-class PersonRepository extends Model implements Transformable
+class Product extends Model implements Transformable
 {
     use TransformableTrait;
 

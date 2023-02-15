@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,16 +55,15 @@ Route::get('persons/restore/one/{person}', [PersonController::class, 'restore'])
 Route::get('persons/restore/all', [PersonController::class, 'restoreAll'])->name('persons.restore.all');
 // Összes többi
 Route::resource('persons', PersonController::class);
-/*
+
 // ---------
 // PRODUCTS
 // ---------
 // Kijelölt törlése
-Route::delete('products/{product}', [PersonController::class, 'destroy'])->name('products.destroy');
+//Route::delete('products/{product}', [PersonController::class, 'destroy'])->name('products.destroy');
 // Kijelölt visszaállítása
-Route::get('products/restore/one/{product}', [PersonController::class, 'restore'])->name('products.restore');
+//Route::get('products/restore/one/{product}', [PersonController::class, 'restore'])->name('products.restore');
 // Összes visszaállítása
-Route::get('products/restore/all', [PersonController::class, 'restoreAll'])->name('products.restore.all');
+//Route::get('products/restore/all', [PersonController::class, 'restoreAll'])->name('products.restore.all');
 // Összes többi
-Route::resource('products', PersonController::class);
-*/
+Route::resource('products', ProductController::class);

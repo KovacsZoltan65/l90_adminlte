@@ -51,15 +51,48 @@
 
                             <!-- NEW Product -->
                             <a class="btn btn-success" href="{{ route('products.create') }}">Create Product</a>
+                            @include(
+                                'components.anchor', 
+                                [
+                                    'class' => 'btn btn-success',
+                                    'title' => 'Create Product',
+                                    'href' => route('products.create')
+                                ]
+                            )
 
                         @if( request()->has('view_deleted') )
                             <!-- View All -->
-                            <a class="btn btn-info" href="{{ route('products.index') }}">View All</a>
+                            <!--<a class="btn btn-info" href="{{ route('products.index') }}">View All</a>-->
+                            @include(
+                                'components.anchor', 
+                                [
+                                    'class' => 'btn btn-info',
+                                    'title' => 'View All',
+                                    'href' => route('products.index')
+                                ]
+                            )
+
                             <!-- Restore All -->
-                            <a class="btn btn-success" href="{{ route('products.restore.all') }}">Restore All</a>
+                            <!--<a class="btn btn-success" href="{{ route('products.restore.all') }}">Restore All</a>-->
+                            @include(
+                                'components.anchor', 
+                                [
+                                    'class' => 'btn btn-success',
+                                    'href' => route('products.restore.all'),
+                                    'title' => 'Restore All'
+                                ]
+                            )
                         @else
                             <!-- View All Deleted -->
-                            <a class="btn btn-primary" href="{{ route('products.index', ['view_deleted' => 'DeletedRecords']) }}">View Deleted</a>
+                            <!--<a class="btn btn-primary" href="{{ route('products.index', ['view_deleted' => 'DeletedRecords']) }}">View Deleted</a>-->
+                            @include(
+                                'components.anchor', 
+                                [
+                                    'class' => 'btn btn-primary',
+                                    'title' => 'View Deleted',
+                                    'href' => route('products.index', ['view_deleted' => 'DeletedRecords'])
+                                ]
+                            )
                         @endif
                         </div>
 
@@ -79,22 +112,42 @@
                                     <td>
                                     @if( request()->has('view_deleted') )
                                         <!-- RESTORE button -->
-                                        <a href="{{ route('products.restore', $product->id) }}" 
-                                           class="btn btn-success"
-                                        >RESTORE</a>
+                                        <!--<a href="{{ route('products.restore', $product->id) }}" class="btn btn-success">RESTORE</a>-->
+                                        @include(
+                                            'components.anchor', 
+                                            [
+                                                'class' => 'btn btn-success',
+                                                'href' => route('products.restore', $product->id),
+                                                'title' => 'RESTORE'
+                                            ]
+                                        )
                                     @else
                                         <form method="post" 
                                               action="{{ route('products.destroy', $product->id) }}">
                                             
                                             <!-- EDIT button -->
-                                            <a href="{{ route('products.edit', $product->id) }}" 
-                                               class="btn btn-info">EDIT</a>
+                                            <!--<a href="{{ route('products.edit', $product->id) }}" class="btn btn-info">EDIT</a>-->
+                                            @include(
+                                                'components.anchor', 
+                                                [
+                                                    'class' => 'btn btn-info',
+                                                    'href' => route('products.edit', $product->id),
+                                                    'title' => 'EDIT'
+                                                ]
+                                            )
 
                                             @csrf
                                             @method('DELETE')
                                             <!-- DELETE button -->
-                                            <button class="btn btn-danger show_confirm" 
-                                                    type="submit">DELETE</button>
+                                            <!--<button class="btn btn-danger show_confirm" type="submit">DELETE</button>-->
+                                            @include(
+                                                'components.button', 
+                                                [
+                                                    'type' => 'submit',
+                                                    'title' => 'DELETE',
+                                                    'class' => 'btn btn-danger show_confirm'
+                                                ]
+                                            )
                                         </form>
                                     @endif
                                     </td>

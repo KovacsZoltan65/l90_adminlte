@@ -19,3 +19,8 @@ npm run build
 php -S localhost:8080
 
 php artisan migrate:generate
+
+php artisan make:model <name>
+php artisan make:controller <name> --resource
+php artisan make:repository <name>
+php artisan make:criteria <name>

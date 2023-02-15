@@ -64,8 +64,28 @@
                         </div> <!-- /.card-body -->
 
                         <div class="card-footer">
+                            <!--
                             <button type="submit" class="btn btn-info">Save</button>
+                            -->
+                            @include(
+                                'components.button', 
+                                [
+                                    'type' => 'submit',
+                                    'title' => 'Save', 
+                                    'class' => 'btn btn-info'
+                                ]
+                            )
+                            <!--
                             <a class="btn btn-default float-right" href="{{ route('companies.index') }}">Back</a>
+                            -->
+                            @include(
+                                'components.anchor', 
+                                [
+                                    'class' => 'btn btn-default float-right',
+                                    'href' => route('companies.index'),
+                                    'title' => 'Back'
+                                ]
+                            )
                         </div> <!-- /.card-footer -->
 
                     </form>

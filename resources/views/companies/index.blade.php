@@ -53,16 +53,48 @@
                         <div class="pull-right mb-2">
 
                             <!-- NEW company -->
-                            <a class="btn btn-success" href="{{ route('companies.create') }}">Create Company</a>
+                            <!--<a class="btn btn-success" href="{{ route('companies.create') }}">Create Company</a>-->
+                            @include(
+                                'components.anchor', 
+                                [
+                                    'class' => 'btn btn-success',
+                                    'href' => route('companies.create'),
+                                    'title' => 'Create Company'
+                                ]
+                            )
 
                             @if( request()->has('view_deleted') )
                             <!-- View All -->
-                            <a class="btn btn-info" href="{{ route('companies.index') }}">View All</a>
+                            <!--<a class="btn btn-info" href="{{ route('companies.index') }}">View All</a>-->
+                            @include(
+                                'components.anchor', 
+                                [
+                                    'class' => 'btn btn-info',
+                                    'title' => 'View All',
+                                    'href' => route('companies.index')
+                                ]
+                            )
                             <!-- Restore All -->
-                            <a class="btn btn-success" href="{{ route('companies.restore.all') }}">Restore All</a>
+                            <!--<a class="btn btn-success" href="{{ route('companies.restore.all') }}">Restore All</a>-->
+                            @include(
+                                'components.anchor', 
+                                [
+                                    'class' => 'btn btn-success',
+                                    'href' => route('companies.restore.all'),
+                                    'title' => 'Restore All'
+                                ]
+                            )
                             @else
                             <!-- View All Deleted -->
-                            <a class="btn btn-primary" href="{{ route('companies.index', ['view_deleted' => 'DeletedRecords']) }}">View Deleted</a>
+                            <!--<a class="btn btn-primary" href="{{ route('companies.index', ['view_deleted' => 'DeletedRecords']) }}">View Deleted</a>-->
+                            @include(
+                                'components.anchor', 
+                                [
+                                    'class' => 'btn btn-primary',
+                                    'title' => 'View Deleted',
+                                    'href' => route('companies.index', ['view_deleted' => 'DeletedRecords'])
+                                ]
+                            )
                             @endif
                         </div>
 
@@ -81,23 +113,44 @@
                                     <td>{{ $company->name }}</td>
                                     <td>
                                         @if( request()->has('view_deleted') )
-                                        <!-- RESTORE button -->
-                                        <a href="{{ route('companies.restore', $company->id) }}" 
-                                           class="btn btn-success">RESTORE</a>
+                                            <!-- RESTORE button -->
+                                            <!--<a href="{{ route('companies.restore', $companies->id) }}" class="btn btn-success">RESTORE</a>-->
+                                            @include(
+                                                'components.anchor', 
+                                                [
+                                                    'class' => 'btn btn-success',
+                                                    'href' => route('companies.restore', $companies->id),
+                                                    'title' => 'RESTORE'
+                                                ]
+                                            )
                                         @else
                                         <!-- 'companies.delete', $company->id) -->
                                         <form method="post" 
                                               action="{{ route('companies.destroy', $company) }}">
 
                                             <!-- EDIT button -->
-                                            <a href="{{ route('companies.edit', $company->id) }}" 
-                                               class="btn btn-info">EDIT</a>
+                                            <!--<a href="{{ route('companies.edit', $company->id) }}" class="btn btn-info">EDIT</a>-->
+                                            @include(
+                                                'components.anchor', 
+                                                [
+                                                    'class' => 'btn btn-info',
+                                                    'href' => route('companies.edit', $company->id),
+                                                    'title' => 'EDIT'
+                                                ]
+                                            )
 
                                             @csrf
                                             @method('DELETE')
                                             <!-- DELETE button -->
-                                            <button class="btn btn-danger show_confirm" 
-                                                    type="submit">DELETE</button>
+                                            <!--<button class="btn btn-danger show_confirm" type="submit">DELETE</button>-->
+                                            @include(
+                                                'components.button', 
+                                                [
+                                                    'type' => 'submit',
+                                                    'title' => 'DELETE',
+                                                    'class' => 'btn btn-danger show_confirm'
+                                                ]
+                                            )
                                         </form>
                                         @endif
                                     </td>

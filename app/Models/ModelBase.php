@@ -7,6 +7,8 @@ use Ramsey\Uuid\Uuid;
 
 class ModelBase extends Model{
 
+    protected $primaryKey = 'id';
+
     //
     // In your model...
     public function isSoftDelete(){
