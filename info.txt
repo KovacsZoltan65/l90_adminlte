@@ -1,0 +1,21 @@
+1. https://www.youtube.com/watch?v=X2o346cMyj4&ab_channel=EasySolution
+2. https://www.youtube.com/watch?v=kWaQNQzS7u0&ab_channel=EasySolution
+3. https://www.youtube.com/watch?v=zDCalXvZaZQ&ab_channel=EasySolution
+4. https://www.youtube.com/watch?v=tKzTAijNrwk&ab_channel=EasySolution
+
+https://www.itsolutionstuff.com/post/how-to-restore-deleted-records-in-laravelexample.html
+
+composer create-project laravel/laravel easymultiauthadminlte
+
+php artisan vendor:publish --tag=laravel-assets --ansi --force
+php artisan key:generate --ansi
+
+composer require laravel/ui
+php artisan ui bootstrap --auth
+npm install
+php artisan view:clear
+php artisan migrate
+npm run build
+php -S localhost:8080
+
+php artisan migrate:generate
