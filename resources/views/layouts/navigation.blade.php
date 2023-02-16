@@ -1,5 +1,8 @@
 <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <ul class="nav nav-pills nav-sidebar flex-column" 
+        data-widget="treeview" 
+        role="menu" 
+        data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item {{ (
@@ -62,7 +65,7 @@
                     <a href="{{ url('companies') }}" 
                        class="nav-link {{ (request()->is('companies*')) ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Companies</p>
+                        <p>{{ __('global.companies') }}</p>
                     </a>
                 </li>
 
@@ -70,7 +73,7 @@
                     <a href="{{ url('persons') }}" 
                        class="nav-link {{ (request()->is('persons*')) ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Persons</p>
+                        <p>{{ __('global.persons') }}</p>
                     </a>
                 </li>
                 
@@ -78,7 +81,7 @@
                     <a href="{{ url('products') }}" 
                        class="nav-link {{ (request()->is('products*')) ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Products</p>
+                        <p>{{ __('global.products') }}</p>
                     </a>
                 </li>
                 

@@ -83,7 +83,8 @@ return [
     |
     */
 
-    'locale' => 'en',
+    //'locale' => 'en',
+    'locale' => 'hu',
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +97,8 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    //'fallback_locale' => 'en',
+    'fallback_locale' => 'hu',
 
     /*
     |--------------------------------------------------------------------------
@@ -111,6 +113,19 @@ return [
 
     'faker_locale' => 'en_US',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Available locales
+    |--------------------------------------------------------------------------
+    |
+    | List all locales that your application works with
+    |
+    */
+    'available_locales' => [
+      'English' => 'en',
+      'Hungarian' => 'hu',
+    ],
+    
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -230,5 +245,7 @@ return [
     |
     */
     'checksum_separator' => '',
+    
+    'brand_name' => 'Millennium3',
     
 ];

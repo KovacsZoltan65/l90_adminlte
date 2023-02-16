@@ -60,10 +60,10 @@ Route::resource('persons', PersonController::class);
 // PRODUCTS
 // ---------
 // Kijelölt törlése
-//Route::delete('products/{product}', [PersonController::class, 'destroy'])->name('products.destroy');
+Route::delete('products/{product}', [PersonController::class, 'destroy'])->name('products.destroy');
 // Kijelölt visszaállítása
-//Route::get('products/restore/one/{product}', [PersonController::class, 'restore'])->name('products.restore');
+Route::get('products/restore/one/{product}', [PersonController::class, 'restore'])->name('products.restore');
 // Összes visszaállítása
-//Route::get('products/restore/all', [PersonController::class, 'restoreAll'])->name('products.restore.all');
+Route::get('products/restore/all', [PersonController::class, 'restoreAll'])->name('products.restore.all');
 // Összes többi
 Route::resource('products', ProductController::class);

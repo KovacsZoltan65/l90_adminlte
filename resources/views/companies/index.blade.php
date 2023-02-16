@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('global.companies'))
+
 @section('content')
 <div class="content-wrapper">
 
@@ -8,12 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Companies</h1>
+                    <h1 class="m-0">{{ __('global.companies') }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Companies</li>
+                        <li class="breadcrumb-item"><a href="{{ url('home') }}">{{ __('global.home') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('global.companies') }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -26,25 +28,19 @@
         <div class="container-fluid">
             <div class="col-md-12">
 
-                @if( $message = Session::get('success') )
+                @if(
+                    (Session::has('success')) || 
+                    (Session::has('danger')) || 
+                    (Session::has('info')) || 
+                    (Session::has('warning'))
+                )
                     @include('components.alert.index')
-                <!--
-                <div class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" 
-                            data-dismiss="alert" 
-                            aria-hidden="true">&times;</button>
-                    <h5>
-                        <i class="icon fas fa-ban"></i>&nbsp;Alert!
-                    </h5>
-                    {{ $message }}
-                </div>
-                -->
                 @endif
 
                 <div class="card">
 
                     <div class="card-header">
-                        <h3 class="card-title">Companies</h3>
+                        <h3 class="card-title">{{ __('global.companies') }}</h3>
                     </div>
                     <!-- /.card-header -->
 
@@ -53,13 +49,13 @@
                         <div class="pull-right mb-2">
 
                             <!-- NEW company -->
-                            <!--<a class="btn btn-success" href="{{ route('companies.create') }}">Create Company</a>-->
                             @include(
                                 'components.anchor', 
                                 [
                                     'class' => 'btn btn-success',
                                     'href' => route('companies.create'),
-                                    'title' => 'Create Company'
+                                    'icon' => 'fas fa-plus',
+                                    'title' => __('global.create_company')
                                 ]
                             )
 
@@ -70,8 +66,9 @@
                                 'components.anchor', 
                                 [
                                     'class' => 'btn btn-info',
-                                    'title' => 'View All',
-                                    'href' => route('companies.index')
+                                    'title' => __('global.view_all'),
+                                    'href' => route('companies.index'),
+                                    'icon' => 'fas fa-eye'
                                 ]
                             )
                             <!-- Restore All -->
@@ -81,7 +78,8 @@
                                 [
                                     'class' => 'btn btn-success',
                                     'href' => route('companies.restore.all'),
-                                    'title' => 'Restore All'
+                                    'title' => __('global.restore_all'),
+                                    'icon' => 'fas fa-trash-arrow-up'
                                 ]
                             )
                             @else
@@ -91,8 +89,9 @@
                                 'components.anchor', 
                                 [
                                     'class' => 'btn btn-primary',
-                                    'title' => 'View Deleted',
-                                    'href' => route('companies.index', ['view_deleted' => 'DeletedRecords'])
+                                    'title' => __('global.view_deleted'),
+                                    'href' => route('companies.index', ['view_deleted' => 'DeletedRecords']),
+                                    'icon' => 'fas fa-eye'
                                 ]
                             )
                             @endif
@@ -102,8 +101,8 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Actions</th>
+                                    <th>{{ __('global.name') }}</th>
+                                    <th class="col-md-3">{{ __('global.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,15 +113,8 @@
                                     <td>
                                         @if( request()->has('view_deleted') )
                                             <!-- RESTORE button -->
-                                            <!--<a href="{{ route('companies.restore', $companies->id) }}" class="btn btn-success">RESTORE</a>-->
-                                            @include(
-                                                'components.anchor', 
-                                                [
-                                                    'class' => 'btn btn-success',
-                                                    'href' => route('companies.restore', $companies->id),
-                                                    'title' => 'RESTORE'
-                                                ]
-                                            )
+                                            <!--<a href="{{ route('companies.restore', $company->id) }}" class="btn btn-success">RESTORE</a>-->
+                                            @include('components.buttons.restore', ['href' => route('companies.restore', $company->id)])
                                         @else
                                         <!-- 'companies.delete', $company->id) -->
                                         <form method="post" 
@@ -130,27 +122,13 @@
 
                                             <!-- EDIT button -->
                                             <!--<a href="{{ route('companies.edit', $company->id) }}" class="btn btn-info">EDIT</a>-->
-                                            @include(
-                                                'components.anchor', 
-                                                [
-                                                    'class' => 'btn btn-info',
-                                                    'href' => route('companies.edit', $company->id),
-                                                    'title' => 'EDIT'
-                                                ]
-                                            )
+                                            @include('components.buttons.edit', ['href' => route('companies.edit', $company->id)])
 
                                             @csrf
                                             @method('DELETE')
                                             <!-- DELETE button -->
                                             <!--<button class="btn btn-danger show_confirm" type="submit">DELETE</button>-->
-                                            @include(
-                                                'components.button', 
-                                                [
-                                                    'type' => 'submit',
-                                                    'title' => 'DELETE',
-                                                    'class' => 'btn btn-danger show_confirm'
-                                                ]
-                                            )
+                                            @include('components.buttons.delete')
                                         </form>
                                         @endif
                                     </td>

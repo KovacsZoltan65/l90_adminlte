@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('global.products'))
+
 @section('content')
 <div class="content-wrapper">
 
@@ -8,12 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Products</h1>
+                    <h1 class="m-0">{{ __('global.products') }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Products</li>
+                        <li class="breadcrumb-item"><a href="{{ url('home') }}">{{ __('global.home') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('global.products') }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -26,8 +28,14 @@
         <div class="container-fluid">
             <div class="col-md-12">
 
-                @if( $message = Session::get('success') )
-                <div class="alert alert-success alert-dismissible">
+                @if( 
+                    ( Session::has('success') ) || 
+                    ( Session::has('danger') ) || 
+                    ( Session::has('info') ) ||
+                    ( Session::has('warning') )
+                )
+                @include('components.alert.index')
+                <!--<div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" 
                             data-dismiss="alert" 
                             aria-hidden="true">&times;</button>
@@ -35,13 +43,13 @@
                         <i class="icon fas fa-ban"></i>&nbsp;Alert!
                     </h5>
                     {{ $message }}
-                </div>
+                </div>-->
                 @endif
 
                 <div class="card">
 
                     <div class="card-header">
-                        <h3 class="card-title">Products</h3>
+                        <h3 class="card-title">{{ __('global.products') }}</h3>
                     </div>
                     <!-- /.card-header -->
 
@@ -50,13 +58,13 @@
                         <div class="pull-right mb-2">
 
                             <!-- NEW Product -->
-                            <a class="btn btn-success" href="{{ route('products.create') }}">Create Product</a>
                             @include(
                                 'components.anchor', 
                                 [
                                     'class' => 'btn btn-success',
-                                    'title' => 'Create Product',
-                                    'href' => route('products.create')
+                                    'title' => __('global.create_product'),
+                                    'href' => route('products.create'),
+                                    'icon' => 'fas fa-plus'
                                 ]
                             )
 
@@ -67,8 +75,9 @@
                                 'components.anchor', 
                                 [
                                     'class' => 'btn btn-info',
-                                    'title' => 'View All',
-                                    'href' => route('products.index')
+                                    'title' => __('global.view_all'),
+                                    'href' => route('products.index'),
+                                    'icon' => 'fas fa-eye'
                                 ]
                             )
 
@@ -79,7 +88,8 @@
                                 [
                                     'class' => 'btn btn-success',
                                     'href' => route('products.restore.all'),
-                                    'title' => 'Restore All'
+                                    'title' => __('global.restore_all'),
+                                    'icon' => 'fas fa-trash-arrow-up'
                                 ]
                             )
                         @else
@@ -89,8 +99,9 @@
                                 'components.anchor', 
                                 [
                                     'class' => 'btn btn-primary',
-                                    'title' => 'View Deleted',
-                                    'href' => route('products.index', ['view_deleted' => 'DeletedRecords'])
+                                    'title' => __('global.view_deleted'),
+                                    'href' => route('products.index', ['view_deleted' => 'DeletedRecords']),
+                                    'icon' => 'fas fa-eye'
                                 ]
                             )
                         @endif
@@ -100,8 +111,8 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Actions</th>
+                                    <th>{{ __('global.name') }}</th>
+                                    <th class="col-md-2">{{ __('global.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,41 +124,18 @@
                                     @if( request()->has('view_deleted') )
                                         <!-- RESTORE button -->
                                         <!--<a href="{{ route('products.restore', $product->id) }}" class="btn btn-success">RESTORE</a>-->
-                                        @include(
-                                            'components.anchor', 
-                                            [
-                                                'class' => 'btn btn-success',
-                                                'href' => route('products.restore', $product->id),
-                                                'title' => 'RESTORE'
-                                            ]
-                                        )
+                                        @include('components.buttons.restore', ['href' => route('products.restore', $product->id)])
                                     @else
                                         <form method="post" 
                                               action="{{ route('products.destroy', $product->id) }}">
                                             
                                             <!-- EDIT button -->
-                                            <!--<a href="{{ route('products.edit', $product->id) }}" class="btn btn-info">EDIT</a>-->
-                                            @include(
-                                                'components.anchor', 
-                                                [
-                                                    'class' => 'btn btn-info',
-                                                    'href' => route('products.edit', $product->id),
-                                                    'title' => 'EDIT'
-                                                ]
-                                            )
+                                            @include('components.buttons.edit', ['href' => route('products.edit', $product->id)])
 
                                             @csrf
                                             @method('DELETE')
                                             <!-- DELETE button -->
-                                            <!--<button class="btn btn-danger show_confirm" type="submit">DELETE</button>-->
-                                            @include(
-                                                'components.button', 
-                                                [
-                                                    'type' => 'submit',
-                                                    'title' => 'DELETE',
-                                                    'class' => 'btn btn-danger show_confirm'
-                                                ]
-                                            )
+                                            @include('components.buttons.delete')
                                         </form>
                                     @endif
                                     </td>

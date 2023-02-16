@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Criteria\ProductCriteria;
+use App\Criteria\PersonCriteria;
 use App\Models\Person;
 
 /**
@@ -25,6 +25,7 @@ class PersonRepository extends BaseRepository
      * Boot up the repository, pushing criteria
      */
     public function boot(){
-        $this->pushCriteria( ProductCriteria::class );
+        //$this->pushCriteria(app(RequestCriteria::class));
+        $this->pushCriteria(PersonCriteria::class);
     }
 }

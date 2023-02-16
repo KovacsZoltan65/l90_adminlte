@@ -22,7 +22,21 @@ class ProductController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        
+
+        if( $request->has('view_deleted') ){
+            $products = $this->repository
+                ->scopeQuery(function($query){
+                    return $query->onlyTrashed()
+                        ->paginate(config('app.paginate_number'));
+                })->all();
+        }else{
+            $products = $this->repository
+                ->scopeQuery(function($query){
+                    return $query
+                        ->paginate(config('app.paginate_number'));
+                })->all();
+        }
+        /*
         if( $request->has('view_deleted') ){
             // Csak a törölteket
             $products = $this->repository
@@ -38,7 +52,7 @@ class ProductController extends Controller{
                         ->paginate(config('app.paginate_number'));
                 })->all();
         }
-
+        */
         return view('products.index', compact('products'));
     }
 

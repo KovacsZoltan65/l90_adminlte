@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('global.create_person'))
+
 @section('content')
 <div class="content-wrapper">
 
@@ -8,13 +10,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Create Person</h1>
+                    <h1 class="m-0">{{ __('global.create_person') }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ url('companies') }}">Persons</a></li>
-                        <li class="breadcrumb-item active">Person</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('global.home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('companies') }}">{{ __('global.persons') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('global.create_person') }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -35,11 +37,13 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h3 class="card-title">Bordered Table</h3>
+                        <h3 class="card-title">{{ __('global.basic_data') }}</h3>
                     </div>
                     <!-- /.card-header -->
 
-                    <form action="{{ route('persons.store') }}" method="POST">
+                    <form action="{{ route('persons.store') }}" 
+                          method="POST"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
 
@@ -47,11 +51,11 @@
                             <div class="form-group row">
                                 <label for="name" 
                                        class="col-sm-2 col-form-label"
-                                >Name</label>
+                                >{{ __('global.name') }}:</label>
                                 <div class="col-sm-10">
                                     <input type="text" id="name" name="name" 
                                            class="form-control is-invalid" 
-                                           placeholder="Name">
+                                           placeholder="{{ __('global.name') }}">
                                     @error('name')
                                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                     @enderror
@@ -60,15 +64,9 @@
                         </div>
 
                         <div class="card-footer">
-                                
-                            <button type="submit" 
-                                    class="btn btn-info"
-                            >Save</button>
+                            @include('components.buttons.save')
 
-                            <a class="btn btn-default float-right" 
-                                href="{{ route('persons.index') }}" 
-                                enctype="multipart/form-data"
-                            >Back</a>
+                            @include('components.buttons.cancel', ['href' => route('persons.index')])
 
                         </div>
 

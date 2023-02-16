@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in (v2)</title>
+    <title>{{ __('global.sign_in') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,13 +24,14 @@
                 <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">{{ __('auth.sign_in') }}</p>
 
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="input-group mb-3">
                         <input id="email" name="email" 
-                               type="email" class="form-control" placeholder="Email">
+                               type="email" class="form-control" 
+                               placeholder="{{ __('global.email') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -39,7 +40,8 @@
                     </div>
                     <div class="input-group mb-3">
                         <input id="password" name="password" 
-                               type="password" class="form-control" placeholder="Password">
+                               type="password" class="form-control" 
+                               placeholder="{{ __('global.password') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -51,15 +53,14 @@
                             <div class="icheck-primary">
                                 <input type="checkbox" id="remember">
                                 <label for="remember">
-                                    Remember Me
+                                    {{ __('global.remember_me') }}
                                 </label>
                             </div>
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
                             <button type="submit" 
-                                    class="btn btn-primary btn-block"
-                            >Sign In</button>
+                                    class="btn btn-primary btn-block">{{ __('global.sign_in') }}</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -78,11 +79,11 @@
 
                 <p class="mb-1">
                     <a href="{{ route('password.request') }}"
-                    >I forgot my password</a>
+                    >{{ __('global.forgot_password') }}</a>
                 </p>
                 <p class="mb-0">
                     <a href="{{ route('register') }}" 
-                       class="text-center">Register a new membership</a>
+                       class="text-center">{{ __('global.register_new_membership') }}</a>
                 </p>
             </div>
             <!-- /.card-body -->

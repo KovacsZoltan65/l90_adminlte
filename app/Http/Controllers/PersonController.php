@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PersonRequest;
+use App\Requests\PersonRequest;
 use App\Models\Person;
 use App\Repositories\PersonRepository;
 use Illuminate\Http\Request;

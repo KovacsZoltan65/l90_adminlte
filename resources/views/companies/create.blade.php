@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('global.create_company'))
+
 @section('content')
 <div class="content-wrapper">
 
@@ -8,20 +10,20 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Create Company</h1>
+                    <h1 class="m-0">{{ __('global.create_company') }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ url('companies') }}">Companies</a></li>
-                        <li class="breadcrumb-item active">Company</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('global.home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('companies') }}">{{ __('global.companies') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('global.create_company') }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content-header -->
-
+    
     @if(session('status'))
     <div class="alert alert-success mb-1 mt-1">
         {{ session('status') }}
@@ -35,7 +37,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h3 class="card-title">Bordered Table</h3>
+                        <h3 class="card-title">{{ __('global.basic_data') }}</h3>
                     </div>
                     <!-- /.card-header -->
 
@@ -48,10 +50,10 @@
 
                             <div class="form-group row">
                                 <label for="name" 
-                                       class="col-sm-2 col-form-label">Name</label>
+                                       class="col-sm-2 col-form-label">{{ __('global.name') }}:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" 
-                                           id="name" placeholder="Name" 
+                                           id="name" placeholder="{{ __('global.name') }}" 
                                            aria-describedby="span_name"
                                            value="">
                                     <span id="span_name" name="span_name" 
@@ -67,25 +69,9 @@
                         <div class="card-footer">
 
                             <!--<button type="submit" class="btn btn-info">Save</button>-->
-                            @include(
-                                'components.button', 
-                                [
-                                    'type' => 'submit',
-                                    'title' => 'Save',
-                                    'class' => 'btn btn-info'
-                                ]
-                            )
-                            <!--
-                            <a class="btn btn-default float-right" href="{{ route('companies.index') }}">Back</a>
-                            -->
-                            @include(
-                                'components.anchor',
-                                [
-                                    'class' => 'btn btn-default float-right',
-                                    'href' => route('companies.index'),
-                                    'title' => 'Back'
-                                ]
-                            )
+                            @include('components.buttons.save')
+                            
+                            @include('components.buttons.cancel', ['href' => route('companies.index')])
                         </div>
 
                     </form>

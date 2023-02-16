@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('global.edit_product'))
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -7,17 +9,17 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Edit Product</h1>
+                    <h1 class="m-0">{{ __('global.edit_product') }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}">Home</a>
+                            <a href="{{ route('home') }}">{{ __('global.home') }}</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('companies') }}">Products</a>
+                            <a href="{{ url('companies') }}">{{ __('global.products') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">Product</li>
+                        <li class="breadcrumb-item active">{{ __('global.edit_product') }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -33,7 +35,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h3 class="card-title">Bordered Table</h3>
+                        <h3 class="card-title">{{ __('global.basic_data') }}</h3>
                     </div>
                     <!-- /.card-header -->
 
@@ -47,10 +49,10 @@
 
                             <div class="form-group row">
                                 <label for="name" 
-                                       class="col-sm-2 col-form-label">Name</label>
+                                       class="col-sm-2 col-form-label">{{ __('global.name') }}:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" 
-                                           id="name" placeholder="Name" 
+                                           id="name" placeholder="{{ __('global.name') }}" 
                                            aria-describedby="span_name"
                                            value="{{ $product->name }}">
                                     <span id="span_name" name="span_name" 
@@ -64,8 +66,9 @@
                         </div> <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-info">Save</button>
-                            <a class="btn btn-default float-right" href="{{ route('companies.index') }}">Back</a>
+                            @include('components.buttons.save')
+
+                            @include('components.buttons.cancel', ['href' => route('products.index')])
                         </div> <!-- /.card-footer -->
 
                     </form>

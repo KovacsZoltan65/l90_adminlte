@@ -2,10 +2,8 @@
 
 namespace App\Repositories;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Entities\Product;
-use App\Validators\ProductValidator;
+use App\Criteria\ProductCriteria;
+use App\Models\Product;
 
 /**
  * Class ProductRepositoryEloquent.
@@ -31,7 +29,8 @@ class ProductRepository extends BaseRepository
      */
     public function boot()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
+        //$this->pushCriteria(app(RequestCriteria::class));
+        $this->pushCriteria(ProductCriteria::class);
     }
     
 }
